@@ -2,6 +2,9 @@ import Header from './components/Header.jsx'
 import UserProfile from './components/UserProfile.jsx'
 import Feed from './components/Feed.jsx'
 import PostCard from './components/PostCard.jsx'
+import InputLogger from './components/InputLogger.jsx'
+import LoginForm from './components/LoginForm.jsx'
+import MessageBoard from './components/MessageBoard.jsx'
 
 export default function App() {
   const handleAddPost = () => {
@@ -10,16 +13,21 @@ export default function App() {
 
   return (
     <div style={{ maxWidth: 800, margin: '0 auto', padding: 16 }}>
-      {/* Header utilisé avec la callback */}
+   
       <Header onAddPost={handleAddPost} />
 
-      {/* Profil récupéré via l’API */}
+
       <UserProfile />
 
-      {/* Fil d’actualités (state + useEffect pour le titre) */}
+      <LoginForm />
+
+      <h1>je test Messageboard en mode GOATESQUE</h1>
+      <MessageBoard />
+
+    
       <Feed />
 
-      {/* PostCard autonome pour montrer l’utilisation directe */}
+  
       <div style={{ marginTop: 24 }}>
         <h3>Exemple de PostCard autonome</h3>
         <PostCard
@@ -28,6 +36,11 @@ export default function App() {
           initialLikes={1}
         />
       </div>
+
+      <InputLogger />
+
+      
+
     </div>
   )
 }

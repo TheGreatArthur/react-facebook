@@ -2,16 +2,27 @@ import { useState, useEffect } from 'react'
 
 export default function UserProfile() {
   const [user, setUser] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users/1')
       .then(response => response.json())
-      .then(data => setUser(data))
-      .catch(error => console.error('Erreur de chargement :', error))
+      .then(data => {
+        setUser(data)
+        setIsLoading(false) 
+      })
+      .catch(error => {
+        console.error('Erreur de chargement :', error)
+        setIsLoading(false) 
+      })
   }, [])
 
+  if (isLoading) {
+    return <p>Chargement...</p>
+  }
+
   if (!user) {
-    return <p>Chargement des informations...</p>
+    return <p>Erreur lors du chargement des données.</p>
   }
 
   return (
