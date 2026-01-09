@@ -1,12 +1,30 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-export default function MessageForm({ onAddMessage }) {
+export default function MessageForm({
+  onAddMessage,
+  onUpdateMessage,
+  onDeleteMessage,
+  editingMessage,
+  onCancelEdit,
+  compact = false,
+}) {
   const [message, setMessage] = useState('')
+
+  useEffect(() => {
+    if (editingMessage) setMessage(editingMessage.content)
+  }, [editingMessage])
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    if (message.trim() === '') return
-    onAddMessage(message)
+    const text = message.trim()
+    if (!text) return
+
+    if (editingMessage) {
+      onUpdateMessage?.(editingMessage.id, text)
+    } else {
+      onAddMessage?.(text)
+    }
+
     setMessage('')
   }
 
@@ -17,10 +35,24 @@ export default function MessageForm({ onAddMessage }) {
         type="text"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        placeholder="Écrire un message..."
+        placeholder="Écrire un commentaire..."
         aria-label="Champ de message"
       />
-      <button type="submit" aria-label="Publier le message">Publier</button>
+
+      <button type="submit" aria-label="Publier le message">
+        {editingMessage ? 'Modifier' : 'Publier'}
+      </button>
+
+      {editingMessage && (
+        <>
+          <button type="button" onClick={() => { setMessage(''); onCancelEdit?.() }}>
+            Annuler
+          </button>
+          <button type="button" onClick={() => onDeleteMessage?.(editingMessage.id)}>
+            Supprimer
+          </button>
+        </>
+      )}
     </form>
   )
 }

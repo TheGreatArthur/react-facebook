@@ -2,7 +2,7 @@ import React from 'react'
 import useFormInput from '../hooks/useFormInput'
 import { Form, Button } from 'react-bootstrap'
 
-export default function CreatePostForm({ dispatch, onCancel }) {
+export default function CreatePostForm({ dispatch, onCancel, onToast }) {
   const content = useFormInput('')
 
   const handleSubmit = (e) => {
@@ -10,9 +10,12 @@ export default function CreatePostForm({ dispatch, onCancel }) {
     const value = (content && content.value) || ''
     const trimmed = value.toString().trim()
     if (!trimmed) return
+
     dispatch({ type: 'ADD_POST', payload: { content: trimmed, author: 'Vous' } })
-    // reset
+
     content.onChange('')
+
+    onToast?.('Post publié', 'success')
     if (typeof onCancel === 'function') onCancel()
   }
 

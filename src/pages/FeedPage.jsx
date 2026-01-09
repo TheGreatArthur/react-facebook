@@ -19,7 +19,10 @@ export default function FeedPage() {
       <div className="container">
         <main className="main main--center">
           <div className="card">
-            <Feed showComposer={showComposer} setShowComposer={setShowComposer} />
+            <Feed
+              showComposer={showComposer}
+              setShowComposer={setShowComposer}
+            />
           </div>
         </main>
       </div>

@@ -292,6 +292,41 @@
   margin: 0 auto;
 }
 
+/* Feed search */
+.feed-search {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 12px 0 16px;
+}
+
+.feed-search__label {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.feed-search__controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.feed-search__controls input {
+  flex: 1;
+}
+
+.feed-search__clear {
+  white-space: nowrap;
+}
+
+.feed-search__meta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
 
 /* =========================
    POST CARD (THEME SAFE)
