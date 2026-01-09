@@ -11,15 +11,16 @@ export default function MessageForm({ onAddMessage }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="message-form">
       <input
+        className="message-input"
         type="text"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        placeholder="Écrire le message juste la gate"
-        style={{ marginRight: 8 }}
+        placeholder="Écrire un message..."
+        aria-label="Champ de message"
       />
-      <button type="submit">PUBLIER</button>
+      <button type="submit" aria-label="Publier le message">Publier</button>
     </form>
   )
 }

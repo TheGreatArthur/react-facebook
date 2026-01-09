@@ -9,8 +9,8 @@ setText(event.target.value)
   }
 
   return (
-    <div style={{ margin: '16px 0' }}>
-      <label htmlFor="logger" style={{ display: 'block', marginBottom: 8 }}>
+    <div className="card">
+      <label htmlFor="logger" className="form-row">
         VOUS DEVEZ SAISIR UN TEXTE ZEBI :
       </label>
 
@@ -20,10 +20,9 @@ setText(event.target.value)
         value={text}
         onChange={handleChange}
         placeholder="Écrire ici..."
-       
       />
 
-      <p style={{ marginTop: 12 }}>
+      <p className="form-note">
         Texte trop stylé : <strong>{text || '...'}</strong>
       </p>
     </div>

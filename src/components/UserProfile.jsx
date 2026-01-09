@@ -26,15 +26,7 @@ export default function UserProfile() {
   }
 
   return (
-    <section
-      style={{
-        border: '1px solid #ddd',
-        borderRadius: 8,
-        padding: 16,
-        marginBottom: 24,
-        backgroundColor: 'white'
-      }}
-    >
+    <section className="card">
       <h2>Profil Utilisateur</h2>
       <p><strong>Nom :</strong> {user.name}</p>
       <p><strong>Email :</strong> {user.email}</p>

@@ -1,46 +1,43 @@
-import Header from './components/Header.jsx'
-import UserProfile from './components/UserProfile.jsx'
-import Feed from './components/Feed.jsx'
-import PostCard from './components/PostCard.jsx'
-import InputLogger from './components/InputLogger.jsx'
-import LoginForm from './components/LoginForm.jsx'
-import MessageBoard from './components/MessageBoard.jsx'
+import './App.css'
+import './index.css'
+
+import { Routes, Route, Navigate } from 'react-router-dom'
+
+import { AuthProvider } from './context/AuthContext.jsx'
+import { ThemeProvider } from './context/ThemeContext.jsx'
+
+import FeedPage from './pages/FeedPage.jsx'
+import LoginPage from './pages/LoginPage.jsx'
+import ProfilePage from './pages/ProfilePage.jsx'
+import ProtectedRoute from './components/ProtectedRoute.jsx'
 
 export default function App() {
-  const handleAddPost = () => {
-    console.log('Ouverture du formulaire')
-  }
-
   return (
-    <div style={{ maxWidth: 800, margin: '0 auto', padding: 16 }}>
-   
-      <Header onAddPost={handleAddPost} />
+    <AuthProvider>
+      <ThemeProvider>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <FeedPage />
+              </ProtectedRoute>
+            }
+          />
 
+          <Route
+            path="/user/:username"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
 
-      <UserProfile />
-
-      <LoginForm />
-
-      <h1>je test Messageboard en mode GOATESQUE</h1>
-      <MessageBoard />
-
-    
-      <Feed />
-
-  
-      <div style={{ marginTop: 24 }}>
-        <h3>Exemple de PostCard autonome</h3>
-        <PostCard
-          author="Demo"
-          content="Ceci est une PostCard affichée directement depuis App.jsx."
-          initialLikes={1}
-        />
-      </div>
-
-      <InputLogger />
-
-      
-
-    </div>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </ThemeProvider>
+    </AuthProvider>
   )
 }

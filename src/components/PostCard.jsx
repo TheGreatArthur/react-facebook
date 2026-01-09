@@ -1,64 +1,66 @@
-import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
-export default function PostCard({ author, content, initialLikes }) {
-  const [likes, setLikes] = useState(initialLikes)
+export default function PostCard({ post, onToggleLike, onDelete }) {
+  const count =
+    typeof post.likesCount === 'number'
+      ? post.likesCount
+      : Array.isArray(post.likes)
+      ? post.likes.length
+      : 0
 
-  const handleLike = () => {
-    setLikes(prevLikes => prevLikes + 1)
-  }
+  const liked = Boolean(post.liked)
 
-  const handleReset = () => {
-    setLikes(initialLikes)
-  }
+  const initials = (post.author || 'A')
+    .split(' ')
+    .map((s) => s[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase()
+
+  const time = post.createdAt
+    ? new Date(post.createdAt).toLocaleString()
+    : ''
 
   return (
-    <article
-      style={{
-        border: '1px solid #ddd',
-        borderRadius: 8,
-        padding: 16,
-        marginBottom: 12,
-        backgroundColor: 'white',
-        boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
-      }}
-    >
-      <p style={{ marginBottom: 8 }}>{content}</p>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <small>Auteur : {author}</small>
-        <div>
-          <button 
-            onClick={handleLike} 
-            style={{
-              marginRight: 8,
-              border: 'none',
-              padding: '6px 10px',
-              borderRadius: 6,
-              backgroundColor: '#007bff',
-              color: 'white',
-              cursor: 'pointer'
-            }}
-          >
-            J’aime ♡
-          </button>
+    <article className="post-card">
+      <header className="post-header">
+        <div className="post-avatar">{initials}</div>
 
-          <button 
-            onClick={handleReset}
-            style={{
-              marginRight: 8,
-              border: 'none',
-              padding: '6px 10px',
-              borderRadius: 6,
-              backgroundColor: '#6c757d',
-              color: 'white',
-              cursor: 'pointer'
-            }}
+        <div className="author-block">
+          <Link
+            to={`/user/${post.author}`}
+            className="author-name"
           >
-            Réinitialiser
-          </button>
-
-          <small>{likes} likes</small>
+            {post.author}
+          </Link>
+          <span className="post-time">{time}</span>
         </div>
-      </div>
+      </header>
+
+      <p className="post-content">{post.content}</p>
+
+      <footer className="post-footer">
+        <div className="post-actions">
+          <button
+            className="like-btn"
+            aria-pressed={liked}
+            onClick={() => onToggleLike?.(post.id)}
+          >
+            {liked ? '❤️' : '🤍'}
+          </button>
+
+          <span className="likes-count">
+            {count} {count > 1 ? 'likes' : 'like'}
+          </span>
+        </div>
+
+        <button
+          className="delete-btn"
+          onClick={() => onDelete?.(post.id)}
+        >
+          Supprimer
+        </button>
+      </footer>
     </article>
   )
 }
